@@ -9,11 +9,15 @@
 namespace app\api\controller\v1;
 
 
-use app\api\BaseController;
+
+use app\api\controller\BaseController;
 use app\api\model\User;
 use app\libs\enums\ClientTypeEnum;
+use app\libs\Exception\Failed;
 use app\libs\Exception\RegisterTypeNotDefine;
+use app\libs\Exception\Success;
 use app\validate\UserEmailForm;
+use think\facade\Config;
 
 class Client extends BaseController {
     public function createClient() {
@@ -36,16 +40,18 @@ class Client extends BaseController {
         }
         $result = User::where('email', '=', $dataArr['account'])->find();
         if (empty($result)) {
+            $salt = Config::get('secure.salt');
+            $password = md5( $dataArr['secret'].$salt);
             $data = [
                 'email' => $dataArr['account'],
-                'password' => md5(getRandChar(32) . $_SERVER['REQUEST_TIME'] . config('secure.salt')),
+                'password' => $password,
                 'nickname' => $dataArr['nickname']
             ];
             $user = new User();
             $user->save($data);
-            return json('success',200);
+            return json( new Success(),201);
         } else {
-            return json('fail');
+            return json(new Failed(),409);
         }
 
     }

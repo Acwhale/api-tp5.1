@@ -16,6 +16,13 @@ Route::get('think', function () {
 Route::get('hello/:name', 'index/hello');
 Route::get('api/:version/book','api/:version.book/getBook');
 Route::post('api/:version/client','api/:version.client/createClient');
+
+
+Route::post('api/:version/token/user','api/:version.token/getAccountToken');
+
+
+Route::get('api/:version/user/:id','api/:version.user/getUser');
+Route::delete('api/:version/deleteUser/:id','api/:version.user/deleteUser');
 return [
 
 ];

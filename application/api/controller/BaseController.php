@@ -6,7 +6,7 @@
  * Time: 10:30
  */
 
-namespace app\api;
+namespace app\api\controller;
 
 
 use think\Controller;

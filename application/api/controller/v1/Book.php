@@ -9,7 +9,8 @@
 namespace app\api\controller\v1;
 
 
-use app\api\BaseController;
+
+use app\api\controller\BaseController;
 
 class Book extends BaseController {
     public function getBook(){
