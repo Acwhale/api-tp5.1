@@ -10,6 +10,7 @@ namespace app\api\controller\v1;
 
 
 use app\api\controller\BaseController;
+use app\api\service\AccountToken;
 use app\libs\enums\UserStatusEnum;
 use app\libs\Exception\NotFoundException;
 use app\libs\Exception\Success;
@@ -27,9 +28,9 @@ class User extends BaseController {
         }
         return $user;
     }
-    public function deleteUser($id =''){
-        (new IDMustNumeric())->goCheck();
-        $user = UserModel::where('id','=',$id)->find();
+    public function deleteUser(){
+        $id = AccountToken::getCurrentUid();
+        $user = UserModel::get(['id'=>$id,'status'=>UserStatusEnum::ACTIVE]);
         if(empty($user)){
             throw new NotFoundException([
                 'msg'=>'user not found'

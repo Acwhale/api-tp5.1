@@ -22,7 +22,7 @@ Route::post('api/:version/token/user','api/:version.token/getAccountToken');
 
 
 Route::get('api/:version/user/:id','api/:version.user/getUser');
-Route::delete('api/:version/deleteUser/:id','api/:version.user/deleteUser');
+Route::delete('api/:version/deleteUser','api/:version.user/deleteUser');
 return [
 
 ];
