@@ -9,6 +9,7 @@
 namespace app\api\service;
 
 
+use app\api\model\User;
 use app\libs\enums\ClientTypeEnum;
 use app\libs\Exception\TokenException;
 use think\facade\Config;

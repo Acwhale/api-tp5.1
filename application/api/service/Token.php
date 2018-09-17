@@ -57,9 +57,11 @@ class Token {
     }
 
     /**
-     * 获取挡墙用户的权限
+     * 获取当前用户的权限
      */
     public static function getCurrentScope(){
         return self::getCurrentTokenVar('scope');
     }
+
+
 }

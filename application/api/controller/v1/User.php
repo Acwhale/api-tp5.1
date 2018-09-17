@@ -18,6 +18,11 @@ use app\validate\IDMustNumeric;
 use app\api\model\User as UserModel;
 
 class User extends BaseController {
+
+    /**
+     * @param string $id
+        查找用户
+     */
     public function getUser($id=''){
         (new IDMustNumeric())->goCheck();
         $user = UserModel::where('id','=',$id)->find();
@@ -28,6 +33,13 @@ class User extends BaseController {
         }
         return $user;
     }
+
+    /**
+     * 删除用户
+     * @return \think\response\Json
+     * @throws NotFoundException
+     * @throws \think\Exception\DbException
+     */
     public function deleteUser(){
         $id = AccountToken::getCurrentUid();
         $user = UserModel::get(['id'=>$id,'status'=>UserStatusEnum::ACTIVE]);
@@ -43,5 +55,9 @@ class User extends BaseController {
             'errCode'=>-1
         ]),202);
 //        return 1;
+    }
+
+    public function superDeleteUser($id =''){
+
     }
 }
