@@ -14,7 +14,7 @@ Route::get('think', function () {
 });
 
 Route::get('hello/:name', 'index/hello');
-Route::get('api/:version/book','api/:version.book/getBook');
+Route::get('api/:version/book','api/:version.book/search');
 Route::post('api/:version/client','api/:version.client/createClient');
 
 

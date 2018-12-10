@@ -7,8 +7,6 @@
  */
 
 namespace app\validate;
-
-
 use app\libs\Exception\ParameterException;
 use think\facade\Request;
 use think\Validate;

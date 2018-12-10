@@ -18,10 +18,14 @@ use app\validate\IDMustNumeric;
 use app\api\model\User as UserModel;
 
 class User extends BaseController {
-
     /**
      * @param string $id
-        查找用户
+     * @return array|null|\PDOStatement|string|\think\Model
+     * @throws NotFoundException
+     * @throws \app\libs\Exception\ParameterException
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function getUser($id=''){
         (new IDMustNumeric())->goCheck();
