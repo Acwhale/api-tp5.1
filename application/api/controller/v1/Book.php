@@ -12,17 +12,19 @@ namespace app\api\controller\v1;
 
 use app\api\controller\BaseController;
 use app\api\service\HttpHelper;
-use app\validate\PageValidate;
-use think\facade\Config;
+use app\validate\SearchValidate;
 
 class Book extends BaseController {
-    //http://t.yushu.im/v2/book/search?q=%E6%9D%91%E4%B8%8A
+    /**
+     * @return mixed
+     * @throws \app\libs\Exception\ParameterException
+     * 书籍检索
+     */
     public function search(){
-        (new PageValidate())->goCheck();
+        (new SearchValidate())->goCheck();
         $q = input('get.q');
         $page = input('get.page');
-        return (new HttpHelper())->get($q);
-        return 1;
+        return (new HttpHelper())->get($q,$page);
     }
 }
 

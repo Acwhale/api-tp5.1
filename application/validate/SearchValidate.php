@@ -9,11 +9,13 @@
 namespace app\validate;
 
 
-class PageValidate extends BaseValidate {
+class SearchValidate extends BaseValidate {
     protected $rule = [
-        'page'=>'number'
+        'q'=>'require|min:1|max:30',
+        'page'=>'number|min:1|max:99'
     ];
     protected $message =[
+        'q' => 'XD,检查一下',
         'page'=>'XD,输入的不对吧'
     ];
 }

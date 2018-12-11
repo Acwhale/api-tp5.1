@@ -8,19 +8,39 @@
 
 namespace app\api\service;
 
+
 class HttpHelper {
-    protected $start = 1;
-    protected $count = 20;
-    public function get($q){
+    /**
+     * @param $q
+     * @param $page
+     * @return mixed
+     * 书籍检索
+     */
+    public function get($q,$page){
+        $prePage = config('base.prePage');
         $keyOrIsbn = isIsbnOrKey($q);
         if ($keyOrIsbn == 'key'){
-            $baseUrl = sprintf(config('base.keyword_url'),$q,$this->count,$this->start);
+            if ($page == null) {
+                $page = 1;
+            }
+            $baseUrl = sprintf(config('base.keyword_url'), $q, $prePage, $this->start($prePage,$page));
         }else{
             $baseUrl = sprintf(config('base.isbn_url'),$q);
         }
         $result = curl_get($baseUrl);
+        if (empty($result)) {
+            return [];
+        }
         return $result;
+    }
 
-
+    /**
+     * @param $prePage
+     * @param $page
+     * @return float|in
+     * 根据page返回start
+     */
+    protected function start ($prePage,$page) {
+        return ($page-1)*$prePage;
     }
 }

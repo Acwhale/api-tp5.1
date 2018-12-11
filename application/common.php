@@ -26,6 +26,7 @@ function curl_get($url,&$httpCode = 0){
     $file_contents = curl_exec($ch);
     $httpCode = curl_getinfo($ch,CURLINFO_HTTP_CODE);
     curl_close($ch);
+//    return $file_contents;
     return json_decode($file_contents,true);
 }
 

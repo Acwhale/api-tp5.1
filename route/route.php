@@ -14,7 +14,10 @@ Route::get('think', function () {
 });
 
 Route::get('hello/:name', 'index/hello');
+
+//搜索书籍
 Route::get('api/:version/book','api/:version.book/search');
+
 Route::post('api/:version/client','api/:version.client/createClient');
 
 
