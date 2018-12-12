@@ -31,6 +31,7 @@ class HttpHelper {
         if (empty($result)) {
             return [];
         }
+        $result['keyword'] = $q;
         return $result;
     }
 
@@ -41,6 +42,6 @@ class HttpHelper {
      * 根据page返回start
      */
     protected function start ($prePage,$page) {
-        return ($page-1)*$prePage;
+        return ($page-1) * $prePage;
     }
 }

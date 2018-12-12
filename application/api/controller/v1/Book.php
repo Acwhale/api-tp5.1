@@ -12,6 +12,7 @@ namespace app\api\controller\v1;
 
 use app\api\controller\BaseController;
 use app\api\service\HttpHelper;
+use app\api\viewModel\BookViewModel;
 use app\validate\SearchValidate;
 
 class Book extends BaseController {
@@ -24,7 +25,8 @@ class Book extends BaseController {
         (new SearchValidate())->goCheck();
         $q = input('get.q');
         $page = input('get.page');
-        return (new HttpHelper())->get($q,$page);
+        $result =  (new HttpHelper())->get($q,$page);
+        return BookViewModel::isSingleOrCollection($result);
     }
 }
 
