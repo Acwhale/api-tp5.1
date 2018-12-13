@@ -17,6 +17,8 @@ Route::get('hello/:name', 'index/hello');
 
 //搜索书籍
 Route::get('api/:version/book','api/:version.book/search');
+//书籍详情
+Route::get('api/:version/:isbn/bookDetail','api/:version.book/bookDetail');
 
 Route::post('api/:version/client','api/:version.client/createClient');
 

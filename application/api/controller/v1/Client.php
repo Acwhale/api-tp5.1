@@ -11,11 +11,10 @@ namespace app\api\controller\v1;
 
 
 use app\api\controller\BaseController;
-use app\api\model\User;
+use app\api\model\User ;
 use app\libs\enums\ClientTypeEnum;
 use app\libs\Exception\Failed;
 use app\libs\Exception\RegisterTypeNotDefine;
-use app\libs\Exception\Success;
 use app\validate\UserEmailForm;
 use think\facade\Config;
 
@@ -34,7 +33,6 @@ class Client extends BaseController {
     }
 
     public function registerByEmail($dataArr) {
-
         if (!is_array($dataArr)) {
             return;
         }
@@ -49,7 +47,7 @@ class Client extends BaseController {
             ];
             $user = new User();
             $user->save($data);
-            return json( new Success(),201);
+            return $user;
         } else {
             return json(new Failed(),409);
         }

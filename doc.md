@@ -29,9 +29,60 @@
 ```
 
 错误返回:
-   {
-       "count": 0,
-       "keyword": "哇昆仑山大家来说扩大解放拉萨空间",
-       "total": 0
-   }
+     {
+         "msg": "the resource are not found 0__0...",
+         "error_code": 1001,
+         "url": "/api/v1/book?q="XXX"
+     }
+```
+
+##### 书籍详情
+`method:get`
+
+`url:/api/v1/:idbn/bookDetail`
+
+| 参数|  类型  |  是否必填 |
+| :---:  | :----:   | :----: |
+| isbn   | string    |   T   |
+
+```
+正确返回
+    {
+        "keyword": "9787070511209",
+        "total": 1,
+        "books": [
+            {
+                "isbn": "9787070511209",
+                "title": "金庸作品集",
+                "publisher": "广州出版社",
+                "pages": "",
+                "author": "金庸",
+                "summary": "",
+                "image": "https://img3.doubanio.com/lpic/s2834105.jpg",
+                "pubdate": "2006-1",
+                "price": "683",
+                "binding": ""
+            }
+        ]
+    }
+
+```
+
+```
+参数错误返回
+    
+    {
+        "msg": "disable access",
+        "error_code": 1002,
+        "url": "/api/v1/978707051120/bookDetail"
+    }
+```
+```
+    未搜到结果返回
+        {
+            "msg": "the resource are not found 0__0...",
+            "error_code": 1001,
+            "url": "/api/v1/book?q=9787070511200"
+        }
+
 ```

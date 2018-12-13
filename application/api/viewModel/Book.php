@@ -9,7 +9,7 @@
 namespace app\api\viewModel;
 
 
-class BookViewModel {
+class Book {
 
     /**
      * @param $data
@@ -65,6 +65,7 @@ class BookViewModel {
      */
     public static function cutBookData ($data) {
         $book = [];
+        $book['isbn'] = $data['isbn'];
         $book['title'] = $data['title'];
         $book['publisher'] = $data['publisher'];
         $book['pages'] = empty($data['pages']) ? '' : $data['pages'];
@@ -73,6 +74,7 @@ class BookViewModel {
         $book['image'] = $data['image'];
         $book['pubdate'] = $data['pubdate'];
         $book['price'] = $data['price'];
+        $book['binding'] = empty($data['binding']) ? '' : $data['binding'];
         return $book;
     }
 

@@ -14,7 +14,7 @@ use app\libs\Exception\NotFoundException;
 use think\facade\Config;
 
 class User extends BaseModel {
-    protected $hidden = ['create_time','password','status'];
+    protected $hidden = ['create_time','password','update_time'];
     public static function getUserByEmail($dataArr) {
         if (!is_array($dataArr)) {
             return;

@@ -9,13 +9,17 @@
 namespace app\api\service;
 
 
+use app\libs\Exception\NotFoundException;
+
 class HttpHelper {
     /**
      * @param $q
      * @param $page
      * @return mixed
+     * @throws NotFoundException
      * 书籍检索
      */
+
     public function get($q,$page){
         $prePage = config('base.prePage');
         $keyOrIsbn = isIsbnOrKey($q);
@@ -28,8 +32,10 @@ class HttpHelper {
             $baseUrl = sprintf(config('base.isbn_url'),$q);
         }
         $result = curl_get($baseUrl);
-        if (empty($result)) {
-            return [];
+        if (array_key_exists('msg',$result) && $result['msg'] == 'book not found') {
+                throw new NotFoundException();
+        } elseif ($result['total'] == 0) {
+             throw new NotFoundException();
         }
         $result['keyword'] = $q;
         return $result;

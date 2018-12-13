@@ -61,7 +61,7 @@ class User extends BaseController {
 //        return 1;
     }
 
-    public function superDeleteUser($id =''){
+    public function login () {
 
     }
 }
