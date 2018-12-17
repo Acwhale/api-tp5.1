@@ -5,3 +5,5 @@
 `1006 The registration method is not defined`
 
 `404 Parameter error`
+
+`1007 forbidden access`

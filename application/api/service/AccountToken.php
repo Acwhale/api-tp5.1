@@ -28,23 +28,23 @@ class AccountToken extends Token {
         return $token;
     }
 
-    private static function grantToken($id,$type){
+    private static function grantToken($id,$type)
+    {
         $cache = [
-          'uid'=>$id,
-          'type'=>$type,
-            'scope'=> null
+            'uid' => $id,
+            'type' => $type,
+            'scope' => null
         ];
         $key = self::generateToken();
         $value = json_encode($cache);
         $expire_in = Config::get('secure.token_exprie_in');
-        $result = Cache::set($key,$value,$expire_in);
-        if(!$result){
+        $result = Cache::set($key, $value, $expire_in);
+        if (!$result) {
             throw  new TokenException([
-                'msg'=>'服务器缓存异常',
-                'errCode'=>10005
+                'msg' => '服务器缓存异常',
+                'errCode' => 10005
             ]);
         }
         return $key;
-
     }
 }

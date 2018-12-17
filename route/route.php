@@ -19,9 +19,12 @@ Route::get('hello/:name', 'index/hello');
 Route::get('api/:version/book','api/:version.book/search');
 //书籍详情
 Route::get('api/:version/:isbn/bookDetail','api/:version.book/bookDetail');
-
+//用户注册
 Route::post('api/:version/client','api/:version.client/createClient');
-
+//用户登录
+Route::post('api/:version/login','api/:version.user/login');
+//获取token
+Route::post('api/:version/user/token','api/:version.user/getToken');
 
 Route::post('api/:version/token/user','api/:version.token/getAccountToken');
 

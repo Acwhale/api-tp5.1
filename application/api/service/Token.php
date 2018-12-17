@@ -9,6 +9,7 @@
 namespace app\api\service;
 
 
+use app\libs\Exception\ForbiddenException;
 use app\libs\Exception\TokenException;
 use think\facade\Cache;
 use think\facade\Config;
@@ -62,6 +63,16 @@ class Token {
     public static function getCurrentScope(){
         return self::getCurrentTokenVar('scope');
     }
-
+    /**
+     * 用户是否登录
+     */
+    public static function userIsLogin(){
+        $id = self::getCurrentTokenVar('id');
+        if($id){
+            return true;
+        }else{
+            throw new ForbiddenException();
+        }
+    }
 
 }

@@ -26,6 +26,7 @@ class ExceptionHandler  extends Handle {
            $this->errCode = 999;
        }
        return json([
+           'code'=> $this->code,
            'msg'=>$this->msg,
            'error_code'=>$this->errCode,
            'url'=>request()->url()
