@@ -35,10 +35,11 @@ class AccountToken extends Token {
             'type' => $type,
             'scope' => null
         ];
+        $expire_in = Config::get('secure.token_exprie_in');
+        $cache['expire_in'] = $expire_in;
         $key = self::generateToken();
         $value = json_encode($cache);
-        $expire_in = Config::get('secure.token_exprie_in');
-        $result = Cache::set($key, $value, $expire_in);
+        $result = Cache::set($key, $value,$expire_in );
         if (!$result) {
             throw  new TokenException([
                 'msg' => '服务器缓存异常',

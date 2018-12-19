@@ -14,7 +14,9 @@ use app\libs\Exception\NotFoundException;
 use think\facade\Config;
 
 class User extends BaseModel {
+
     protected $hidden = ['create_time','update_time'];
+
     public static function getUserByEmail($dataArr) {
         if (!is_array($dataArr)) {
             return;
@@ -34,6 +36,9 @@ class User extends BaseModel {
                 return $user->id;
             }
         }
-
     }
+    public static function getUserById($id){
+        return self::where('id','=',$id)->find();
+    }
+
 }

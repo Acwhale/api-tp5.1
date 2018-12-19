@@ -34,7 +34,7 @@ class HttpHelper {
         $result = curl_get($baseUrl);
         if (array_key_exists('msg',$result) && $result['msg'] == 'book not found') {
                 throw new NotFoundException();
-        } elseif ($result['total'] == 0) {
+        } elseif ( key_exists('total',$result) &&  $result['total'] == 0) {
              throw new NotFoundException();
         }
         $result['keyword'] = $q;

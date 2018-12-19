@@ -25,11 +25,12 @@ Route::post('api/:version/client','api/:version.client/createClient');
 Route::post('api/:version/login','api/:version.user/login');
 //获取token
 Route::post('api/:version/user/token','api/:version.user/getToken');
-
+//保存礼物
+Route::post('api/:version/gift/save','api/:version.gift/saveToGift');
 Route::post('api/:version/token/user','api/:version.token/getAccountToken');
 
 
-Route::get('api/:version/user/:id','api/:version.user/getUser');
+Route::get('api/:version/user/:id','api/:version.user/second');
 
 
 Route::delete('api/:version/deleteUser','api/:version.user/deleteUser');

@@ -7,5 +7,5 @@
  */
 return [
     'salt'=>'EDDFKKMMDkr',
-    'token_exprie_in'=>3*24*3600
+    'token_exprie_in'=>3600 * 2
 ];

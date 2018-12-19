@@ -22,6 +22,12 @@ use app\validate\LoginByEmailValidate;
 use app\api\service\AccountToken as AtService;
 use app\api\service\Token as TokenService;
 class User extends BaseController {
+//    protected $beforeActionList = [
+//        'checkLogin'=>[
+//            'only'=>'getUser'
+//        ]
+//    ];
+
     /**
      * @param string $id
      * @return array|null|\PDOStatement|string|\think\Model
@@ -31,11 +37,7 @@ class User extends BaseController {
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    protected $beforeActionList = [
-        'checkLogin'=>[
-            'except'=>'getUser'
-        ]
-    ];
+
     public function getUser($id=''){
         (new IDMustNumeric())->goCheck();
         $user = UserModel::where('id','=',$id)->find();
