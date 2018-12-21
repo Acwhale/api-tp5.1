@@ -11,6 +11,14 @@ namespace app\api\model;
 
 class Wish extends BaseModel {
     public function user () {
-        return $this->belongsToMany('User','user','id');
+        return $this->belongsTo('User','uid','id');
+    }
+    public static function wishing($isbn,$id){
+        return self::with(['user'])->where('isbn','=',$isbn)
+            ->where('uid','=',$id)->where('launched','=',0)->find();
+    }
+
+    public static function getAllWishers($isbn){
+        return self::with(['user'])->where('isbn','=',$isbn)->where('launched','=',0)->select();
     }
 }

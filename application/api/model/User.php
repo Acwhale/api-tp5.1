@@ -41,4 +41,5 @@ class User extends BaseModel {
         return self::where('id','=',$id)->find();
     }
 
+
 }

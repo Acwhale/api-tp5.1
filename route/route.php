@@ -27,6 +27,13 @@ Route::post('api/:version/login','api/:version.user/login');
 Route::post('api/:version/user/token','api/:version.user/getToken');
 //保存礼物
 Route::post('api/:version/gift/save','api/:version.gift/saveToGift');
+//添加心愿
+Route::post('api/:version/wish/save','api/:version.wish/saveToWish');
+//所有isbn书籍的索要者
+Route::get('api/:version/givers/all/:isbn','api/:version.gift/givers');
+//所有isbn书籍的心愿者
+Route::get('api/:version/wishers/all/:isbn','api/:version.wish/wishers');
+
 Route::post('api/:version/token/user','api/:version.token/getAccountToken');
 
 
