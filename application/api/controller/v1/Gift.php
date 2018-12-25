@@ -10,12 +10,12 @@ namespace app\api\controller\v1;
 
 
 use app\api\controller\BaseController;
+use app\api\service\HttpHelper;
 use app\libs\Exception\IsbnException;
 use app\validate\IDMustNumeric;
 use app\api\service\Gift as GiftService;
 use app\api\model\Gift as GiftModel;
-use function PHPSTORM_META\type;
-
+use app\api\viewModel\Book;
 class Gift extends BaseController {
     /**
      * 加入心愿清单
@@ -52,5 +52,26 @@ class Gift extends BaseController {
 //            $givers->unshift(!$hasInGift,'hasInGift');
 //        }
         return $givers;
+    }
+
+    public function recent(){
+        $gifts =  GiftModel::recent();
+        $helper = new HttpHelper();
+        $book = [];
+        foreach ($gifts as $gift){
+            $book[] = Book::packageSingle($helper->get($gift['isbn'],''));
+        }
+        return $book;
+    }
+
+    public function gifts($id = ''){
+        (new IDMustNumeric())->goCheck();
+        $myGifts =  GiftModel::myGift($id);
+        $isbnList = [];
+        foreach($myGifts as $gift){
+            array_push($isbnList,$gift['isbn']);
+        }
+        return GiftModel::getWishCount($isbnList);
+
     }
 }

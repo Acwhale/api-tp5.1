@@ -33,11 +33,15 @@ Route::post('api/:version/wish/save','api/:version.wish/saveToWish');
 Route::get('api/:version/givers/all/:isbn','api/:version.gift/givers');
 //所有isbn书籍的心愿者
 Route::get('api/:version/wishers/all/:isbn','api/:version.wish/wishers');
+//获取最近的礼物
+Route::get('api/:version/gift/recent','api/:version.gift/recent');
+//获取我的礼物
+Route::get('api/:version/gift/:id/my','api/:version.gift/gifts');
 
 Route::post('api/:version/token/user','api/:version.token/getAccountToken');
 
 
-Route::get('api/:version/user/:id','api/:version.user/second');
+Route::get('api/:version/user/:id','api/:version.user/getUser');
 
 
 Route::delete('api/:version/deleteUser','api/:version.user/deleteUser');

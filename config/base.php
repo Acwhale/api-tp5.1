@@ -9,5 +9,6 @@ return [
      'isbn_url' => "http://t.yushu.im/v2/book/isbn/%s",
     'keyword_url' => "http://t.yushu.im/v2/book/search?q=%s&count=%s&start=%s",
     'prePage' => 15,
-    'beans'=>0.5
+    'beans'=>0.5,
+    'recent'=>30
 ];
