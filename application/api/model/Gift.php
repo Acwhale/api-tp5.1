@@ -41,9 +41,10 @@ class Gift extends BaseModel {
         return self::where('uid','=',$uid)->where('launched','=',0)
                 ->order('create_time','desc')->select();
     }
+
     public static function getWishCount($isbnList){
         //Db::table('pet')->field('owner,count(*)')->group('owner')->select()
-        return Db::table('wish')->field('isbn,count("isbn") AS bookCount')->where('status', '=',1)->
+        return Db::table('wish')->field('isbn,count("isbn") AS wishesCount')->where('status', '=',1)->
         where('launched','=',0)->whereIn('isbn',$isbnList)
             ->group('isbn')->order('create_time','desc')
             ->select();

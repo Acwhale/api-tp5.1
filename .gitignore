@@ -4,3 +4,5 @@
 *.log
 thinkphp
 .env
+runtime/
+application/libs/utils/Email.php

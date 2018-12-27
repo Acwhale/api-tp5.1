@@ -67,11 +67,18 @@ class Gift extends BaseController {
     public function gifts($id = ''){
         (new IDMustNumeric())->goCheck();
         $myGifts =  GiftModel::myGift($id);
+        $helper = new HttpHelper();
         $isbnList = [];
         foreach($myGifts as $gift){
             array_push($isbnList,$gift['isbn']);
         }
-        return GiftModel::getWishCount($isbnList);
-
+        $countList =  GiftModel::getWishCount($isbnList);
+        $book = [];
+        foreach ($countList as $list){
+            $result = Book::packageSingle($helper->get($list['isbn'],''));
+            $result['wishes'] = $list['wishesCount'];
+            $book[] = $result;
+        }
+        return $book;
     }
 }

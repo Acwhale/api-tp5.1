@@ -10,6 +10,7 @@ namespace app\api\service;
 
 
 use app\libs\Exception\ForbiddenException;
+use app\libs\Exception\Success;
 use app\libs\Exception\TokenException;
 use think\facade\Cache;
 use think\facade\Config;
@@ -75,4 +76,21 @@ class Token {
         }
     }
 
+    /**
+     * 注销操作
+     */
+    public  static function clearCache(){
+        $token = Request::header('token');
+        if(!$token){
+            throw new TokenException();
+        }
+        $vars = Cache::rm($token);
+        if($vars){
+            return json(new Success([
+                'msg'=>'注销成功'
+            ]));
+        }else{
+            throw new TokenException();
+        }
+    }
 }

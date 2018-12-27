@@ -16,6 +16,9 @@ use app\libs\enums\UserStatusEnum;
 use app\libs\Exception\NotFoundException;
 use app\libs\Exception\ParameterException;
 use app\libs\Exception\Success;
+use app\libs\Exception\TokenException;
+use app\libs\utils\Email;
+use app\validate\EmailValidate;
 use app\validate\IDMustNumeric;
 use app\api\model\User as UserModel;
 use app\validate\LoginByEmailValidate;
@@ -72,6 +75,12 @@ class User extends BaseController {
 //        return 1;
     }
 
+    /**
+     * 登录
+     * @return array
+     * @throws NotFoundException
+     * @throws ParameterException
+     */
     public function login () {
         (new LoginByEmailValidate())->goCheck();
         $data = input('post.');
@@ -101,11 +110,42 @@ class User extends BaseController {
         }
     }
 
+    /**
+     * 颁发token
+     * @return array
+     */
     public function getToken(){
         $id =  TokenService::getCurrentUid();
         return [
             'id' => $id
         ];
+    }
+
+    /**
+     * 注销登陆
+     * @return \think\response\Json
+     * @throws \app\libs\Exception\TokenException
+     */
+    public function logout(){
+        return TokenService::clearCache();
+    }
+
+    public function info(){
+        echo phpinfo();
+    }
+    public function resetPassword(){
+        $id = TokenService::getCurrentTokenVar('uid');
+        if(!$id){
+            throw  new TokenException();
+        }
+        $user = UserModel::getUserById($id);
+        if(empty($user)){
+            throw new NotFoundException();
+        }
+        (new EmailValidate())->goCheck();
+        $email = input('post.');
+        Email::send($email);
+
     }
 }
 

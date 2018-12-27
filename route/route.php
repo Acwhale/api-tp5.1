@@ -35,16 +35,21 @@ Route::get('api/:version/givers/all/:isbn','api/:version.gift/givers');
 Route::get('api/:version/wishers/all/:isbn','api/:version.wish/wishers');
 //获取最近的礼物
 Route::get('api/:version/gift/recent','api/:version.gift/recent');
-//获取我的礼物
+//获取我的礼物的心愿
 Route::get('api/:version/gift/:id/my','api/:version.gift/gifts');
+Route::get('api/:version/wish/:id/my','api/:version.wish/wishes');
+
+//注销
+Route::post('api/:version/user/logout','api/:version.user/logout');
 
 Route::post('api/:version/token/user','api/:version.token/getAccountToken');
 
 
 Route::get('api/:version/user/:id','api/:version.user/getUser');
-
+Route::post('api/:version/user/reset','api/:version.user/resetPassword');
 
 Route::delete('api/:version/deleteUser','api/:version.user/deleteUser');
+Route::get('api/:version/info','api/:version.user/info');
 Route::delete('api/:version/super/delete/:id','api/:version.user/superDelete');
 return [
 
