@@ -13,6 +13,7 @@ use app\api\controller\BaseController;
 use app\api\service\AccountToken;
 use app\libs\enums\ClientTypeEnum;
 use app\libs\enums\UserStatusEnum;
+use app\libs\Exception\Failed;
 use app\libs\Exception\NotFoundException;
 use app\libs\Exception\ParameterException;
 use app\libs\Exception\Success;
@@ -144,8 +145,19 @@ class User extends BaseController {
         }
         (new EmailValidate())->goCheck();
         $email = input('post.');
-        Email::send($email);
-
+        if($user->email == $email['email']){
+            $name = $user->nickname;
+            if((new Email())->send($email['email'],$name)){
+                return json(new Success([
+                    'msg' => '邮件发送成功'
+                ]));
+            }
+            return json(new Failed([
+                'code'=>200,
+                'msg'=>'请稍后重试',
+                'errCode'=>10009
+            ]));
+        }
     }
 }
 

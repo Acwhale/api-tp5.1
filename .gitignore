@@ -5,4 +5,4 @@
 thinkphp
 .env
 runtime/
-application/libs/utils/Email.php
+config/email.php
