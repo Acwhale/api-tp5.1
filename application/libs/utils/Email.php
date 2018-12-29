@@ -29,7 +29,7 @@ class Email {
      * @param  $name
      * @return bool
      */
-    public function send($email,$name){
+    public function send($email,$name,$passWord){
         Loader::addAutoLoadDir('/vendor/autoload.php');
 //        require_once __DIR__ . '/vendor/autoload.php';
         $mail = new PHPMailer();
@@ -52,18 +52,11 @@ class Email {
             $mail->isHTML(true);
             $mail->Subject = '重置密码';
             $mail->Body    = '<p>亲爱的'. $name .'</p>
-                    <p>点击<a href="c.cn/api/v1/gift/recent" target="_blank">这里</a>可以重置你的密码
-                    </p>
-                    <p>如果无法点击，你也可以将下面的地址复制到浏览器中打开: 如果无法点击，你也可以将下面的地址复制到浏览器中打开: </p>
-                    <a>c.cn/api/v1/gift/recent</a>
-                    <p>你的，</p>
-                    <p>鱼书</p>
+                    <p>你的新密码是：<b>'.$passWord.'</b></b></p>
                     <p>
                         <small>注意，请不要回复此邮件哦</small>
-                    </p>
-';
+                    </p>';
             $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
             if($mail->send()){
                 return true;
             }else{

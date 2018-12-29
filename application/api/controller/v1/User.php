@@ -147,9 +147,14 @@ class User extends BaseController {
         $email = input('post.');
         if($user->email == $email['email']){
             $name = $user->nickname;
-            if((new Email())->send($email['email'],$name)){
+            $salt = config('secure.salt');
+            $newPassword = getRandChar(6);
+            $user->password = (md5($newPassword.$salt));
+            $user->force()->save();
+            if((new Email())->send($email['email'],$name,$newPassword)){
                 return json(new Success([
-                    'msg' => '邮件发送成功'
+                    'code' =>200,
+                    'msg' => '请在邮件中查询你的新密码'
                 ]));
             }
             return json(new Failed([

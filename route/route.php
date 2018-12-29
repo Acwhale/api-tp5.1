@@ -46,6 +46,7 @@ Route::post('api/:version/token/user','api/:version.token/getAccountToken');
 
 
 Route::get('api/:version/user/:id','api/:version.user/getUser');
+#重置密码
 Route::post('api/:version/user/reset','api/:version.user/resetPassword');
 
 Route::delete('api/:version/deleteUser','api/:version.user/deleteUser');
