@@ -49,4 +49,11 @@ class Gift extends BaseModel {
             ->group('isbn')->order('create_time','desc')
             ->select();
     }
+
+    public static function getGiftById($id){
+        return self::where('id','=',$id)->find();
+    }
+    public static function isYourselfGift($userId,$giftUid){
+        return $userId == $giftUid ? true : false;
+     }
 }

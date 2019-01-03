@@ -8,7 +8,6 @@
 
 namespace app\api\model;
 
-
 class Drift extends BaseModel {
 
 }

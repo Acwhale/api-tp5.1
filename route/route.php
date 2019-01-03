@@ -43,7 +43,8 @@ Route::get('api/:version/wish/:id/my','api/:version.wish/wishes');
 Route::post('api/:version/user/logout','api/:version.user/logout');
 
 Route::post('api/:version/token/user','api/:version.token/getAccountToken');
-
+//发送礼物
+Route::get('api/:version/send/drift/:id','api/:version.drift/sendDrift');
 
 Route::get('api/:version/user/:id','api/:version.user/getUser');
 #重置密码
