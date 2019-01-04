@@ -22,6 +22,7 @@ class Gift extends BaseModel {
             ->where('uid','=',$id)->where('launched','=',0)->find();
     }
 
+
     public static function getAllGivers($isbn){
         return self::with(['user'])->where('isbn','=',$isbn)->where('launched','=',0)->select();
     }
@@ -52,6 +53,9 @@ class Gift extends BaseModel {
 
     public static function getGiftById($id){
         return self::where('id','=',$id)->find();
+    }
+    public static function getGiftAndUserById($id){
+        return self::with(['user'])->where('id','=',$id)->find();
     }
     public static function isYourselfGift($userId,$giftUid){
         return $userId == $giftUid ? true : false;

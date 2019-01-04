@@ -10,13 +10,21 @@ namespace app\api\controller\v1;
 
 
 use app\api\controller\BaseController;
+use app\api\service\HttpHelper;
 use app\api\service\Token as TokenService;
 use app\libs\Exception\BeansNotEnoughException;
+use app\libs\Exception\Failed;
 use app\libs\Exception\IsYourselfGiftException;
+use app\libs\Exception\Success;
 use app\libs\Exception\TokenException;
+use app\libs\utils\Email;
+use app\validate\DriftInfoValidate;
 use app\validate\IDMustNumeric;
 use app\api\model\Gift as GiftModel;
 use app\api\model\User as UserModel;
+use app\api\model\Drift as DriftModel;
+use app\api\viewModel\Book as BookView;
+
 
 class Drift extends BaseController {
     public function sendDrift($id = ''){
@@ -40,5 +48,48 @@ class Drift extends BaseController {
         }
         $user = $user->toArray();
         return UserModel::Summary($user);
+    }
+
+    /**
+     * 添加邮寄信息
+     */
+    public function setInfo(){
+        $userId = TokenService::getCurrentUid();
+        if(!$userId){
+            throw new TokenException();
+        }
+        (new DriftInfoValidate())->goCheck();
+        $info = input('post.');
+
+        return $this->saveinfo($info,$userId);
+    }
+
+    private function saveinfo($info,$userID){
+        $gift = GiftModel::getGiftAndUserById($info['gid']);
+        $user = UserModel::getUserById($userID);
+        $drift = new DriftModel();
+        $drift->recipient_name = $info['recipientName'];
+        $drift->mobile = $info['mobile'];
+        $drift->message = $info['message'];
+        $drift->gift_id = $gift->id;
+        $drift->requester_id = $userID;
+        $drift->requester_nickname = $user->nickname;
+        $drift->gifter_nickname = $gift->user->nickname;
+        $drift->gifter_id = $gift->user->id;
+
+        $book = (new HttpHelper())->get($gift->isbn,1);
+        $book = BookView::packageSingle($book);
+        $drift->book_title = $book['books'][0]['title'];
+        $drift->book_author =  $book['books'][0]['author'];
+        $drift->book_img =  $book['books'][0]['image'];
+        $drift->isbn =  $book['books'][0]['isbn'];
+
+        if($drift->save()){
+            $user->beans -= 1;
+            if($user->save()){
+               return json(new Success());
+            }
+            return json(new Failed());
+        }
     }
 }
