@@ -24,8 +24,7 @@ use app\api\model\Gift as GiftModel;
 use app\api\model\User as UserModel;
 use app\api\model\Drift as DriftModel;
 use app\api\viewModel\Book as BookView;
-
-
+use app\api\viewModel\Drift as DriftView;
 class Drift extends BaseController {
     public function sendDrift($id = ''){
         $UserId = TokenService::getCurrentUid();
@@ -60,17 +59,17 @@ class Drift extends BaseController {
         }
         (new DriftInfoValidate())->goCheck();
         $info = input('post.');
-
-        return $this->saveinfo($info,$userId);
+        return $this->saveInfo($info,$userId);
     }
 
-    private function saveinfo($info,$userID){
+    private function saveInfo($info,$userID){
         $gift = GiftModel::getGiftAndUserById($info['gid']);
         $user = UserModel::getUserById($userID);
         $drift = new DriftModel();
         $drift->recipient_name = $info['recipientName'];
         $drift->mobile = $info['mobile'];
         $drift->message = $info['message'];
+        $drift->address = $info['address'];
         $drift->gift_id = $gift->id;
         $drift->requester_id = $userID;
         $drift->requester_nickname = $user->nickname;
@@ -87,9 +86,21 @@ class Drift extends BaseController {
         if($drift->save()){
             $user->beans -= 1;
             if($user->save()){
-               return json(new Success());
+               if((new Email())->sendDriftEmail($gift->user->email,$gift->user->nickname,$book['books'][0]['title'])){
+                   return json(new Success([
+                       'msg' => '想书籍赠送者发送请求成功'
+                   ]));
+               }
             }
             return json(new Failed());
         }
+    }
+    public function pending(){
+        $userId = TokenService::getCurrentUid();
+        if(!$userId){
+            throw  new TokenException();
+        }
+        $drifts  = DriftModel::allDrift($userId)->toArray();
+        return  DriftView::isSingleOrCollection($drifts,$userId);
     }
 }

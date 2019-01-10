@@ -47,7 +47,8 @@ Route::post('api/:version/token/user','api/:version.token/getAccountToken');
 Route::get('api/:version/send/drift/:id','api/:version.drift/sendDrift');
 #填写信息
 Route::post('api/:version/drift/info','api/:version.drift/setInfo');
-
+//我的清单
+Route::get('api/:version/drift/all','api/:version.drift/pending');
 Route::get('api/:version/user/:id','api/:version.user/getUser');
 #重置密码
 Route::post('api/:version/user/reset','api/:version.user/resetPassword');
